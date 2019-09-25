@@ -1,4 +1,4 @@
-package me.breakofday.OwnBlocks;
+package me.breakofday.OwnBlocks.database;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,14 +22,14 @@ public class ConnectionWrapper {
 	private static final ArrayList<PreparedStatement> statements = new ArrayList<>();
 
 	public static void closeAll() {
-		for(Connection connection : connections) {
+		for (Connection connection : connections) {
 			try {
 				connection.close();
 			} catch (SQLException e) {
 				logger.log(Level.SEVERE, "Connection을 닫는 도중 오류가 발생하였습니다.");
 			}
 		}
-		for(PreparedStatement statement : statements) {
+		for (PreparedStatement statement : statements) {
 			try {
 				statement.close();
 			} catch (SQLException e) {
@@ -37,7 +37,7 @@ public class ConnectionWrapper {
 			}
 		}
 	}
-	
+
 	private final Connection connection;
 
 	public ConnectionWrapper(File file) throws IOException, SQLException {
@@ -47,6 +47,10 @@ public class ConnectionWrapper {
 		this.connection = DriverManager.getConnection("jdbc:sqlite:" + file.getPath());
 		connection.setAutoCommit(true);
 		connections.add(connection);
+	}
+
+	public Connection getConnection() {
+		return connection;
 	}
 
 	public StatementWrapper prepareStatement(String sql) throws SQLException {
