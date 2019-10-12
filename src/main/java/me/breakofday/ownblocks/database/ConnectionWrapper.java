@@ -1,4 +1,4 @@
-package me.breakofday.OwnBlocks.database;
+package me.breakofday.ownblocks.database;
 
 import java.io.File;
 import java.io.IOException;

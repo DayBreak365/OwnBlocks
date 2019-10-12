@@ -1,4 +1,4 @@
-package me.breakofday.OwnBlocks;
+package me.breakofday.ownblocks;
 
 import java.util.Iterator;
 
@@ -14,13 +14,13 @@ import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 
-import me.breakofday.OwnBlocks.database.BlockDatabase;
+import me.breakofday.ownblocks.database.BlockDatabase;
 
 class BlockHandler implements Listener {
 
 	private final BlockDatabase database;
 
-	public BlockHandler(BlockDatabase database) {
+	BlockHandler(BlockDatabase database) {
 		this.database = database;
 	}
 
@@ -45,30 +45,30 @@ class BlockHandler implements Listener {
 
 	@EventHandler
 	private void onBlockExplode(BlockExplodeEvent e) {
-		Iterator<Block> iterator = e.blockList().iterator();
-		while (iterator.hasNext()) {
-			Block b = iterator.next();
-			if (database.hasOwner(b.getLocation())) {
-				iterator.remove();
+		Iterator<Block> blocks = e.blockList().iterator();
+		while (blocks.hasNext()) {
+			Block block = blocks.next();
+			if (database.hasOwner(block.getLocation())) {
+				blocks.remove();
 			}
 		}
 	}
 
 	@EventHandler
 	private void onEntityExplode(EntityExplodeEvent e) {
-		Iterator<Block> iterator = e.blockList().iterator();
-		while (iterator.hasNext()) {
-			Block b = iterator.next();
-			if (database.hasOwner(b.getLocation())) {
-				iterator.remove();
+		Iterator<Block> blocks = e.blockList().iterator();
+		while (blocks.hasNext()) {
+			Block block = blocks.next();
+			if (database.hasOwner(block.getLocation())) {
+				blocks.remove();
 			}
 		}
 	}
 
 	@EventHandler
 	private void onPistonExtend(BlockPistonExtendEvent e) {
-		for (Block b : e.getBlocks()) {
-			if (database.hasOwner(b.getLocation())) {
+		for (Block block : e.getBlocks()) {
+			if (database.hasOwner(block.getLocation())) {
 				e.setCancelled(true);
 				break;
 			}

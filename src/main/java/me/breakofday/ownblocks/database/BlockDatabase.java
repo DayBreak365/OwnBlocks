@@ -1,4 +1,4 @@
-package me.breakofday.OwnBlocks.database;
+package me.breakofday.ownblocks.database;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,12 +10,12 @@ import java.util.logging.Logger;
 
 import org.bukkit.Location;
 
-import me.breakofday.OwnBlocks.database.ConnectionWrapper.StatementWrapper;
+import me.breakofday.ownblocks.database.ConnectionWrapper.StatementWrapper;
 
 public class BlockDatabase {
 
 	private static final Logger logger = Logger.getLogger(BlockDatabase.class.getName());
-	
+
 	private final ConnectionWrapper connection;
 	private final StatementWrapper INSERT;
 	private final StatementWrapper SELECT_BY_LOCATION;
@@ -38,7 +38,7 @@ public class BlockDatabase {
 		this.DELETE_BY_LOCATION = connection.prepareStatement("DELETE FROM OWNBLOCKS WHERE world = ? AND x = ? AND y = ? AND z = ?");
 	}
 
-	public int getBlocksCount(UUID uuid) {
+	public int getOwningBlockCount(UUID uuid) {
 		try {
 			ResultSet result = SELECT_COUNT_BY_OWNER.executeQuery(uuid.toString());
 			return result.getInt(1);
@@ -50,9 +50,7 @@ public class BlockDatabase {
 
 	public UUID getOwner(Location loc) {
 		try {
-			String world = loc.getWorld().getName();
-			int x = (int) loc.getX(), y = (int) loc.getY(), z = (int) loc.getZ();
-			ResultSet result = SELECT_BY_LOCATION.executeQuery(world, x, y, z);
+			ResultSet result = SELECT_BY_LOCATION.executeQuery(loc.getWorld().getName(), (int) loc.getX(), (int) loc.getY(), (int) loc.getZ());
 			if (result.next()) {
 				return UUID.fromString(result.getString("owner"));
 			}
@@ -64,9 +62,7 @@ public class BlockDatabase {
 
 	public boolean hasOwner(Location loc) {
 		try {
-			String world = loc.getWorld().getName();
-			int x = (int) loc.getX(), y = (int) loc.getY(), z = (int) loc.getZ();
-			ResultSet result = SELECT_BY_LOCATION.executeQuery(world, x, y, z);
+			ResultSet result = SELECT_BY_LOCATION.executeQuery(loc.getWorld().getName(), (int) loc.getX(), (int) loc.getY(), (int) loc.getZ());
 			return result.next();
 		} catch (SQLException e) {
 			logger.log(Level.SEVERE, "데이터베이스에서 블록의 주인을 가져오는 도중 오류가 발생하였습니다.");
@@ -77,9 +73,7 @@ public class BlockDatabase {
 	public void setOwner(Location loc, UUID uuid) {
 		try {
 			if(!hasOwner(loc)) {
-				String world = loc.getWorld().getName();
-				int x = (int) loc.getX(), y = (int) loc.getY(), z = (int) loc.getZ();
-				INSERT.execute(world, x, y, z, uuid.toString());
+				INSERT.execute(loc.getWorld().getName(), (int) loc.getX(), (int) loc.getY(), (int) loc.getZ(), uuid.toString());
 			}
 		} catch (SQLException e) {
 			logger.log(Level.SEVERE, "데이터베이스에 블록의 주인 정보를 넣는 도중 오류가 발생하였습니다.");
@@ -88,9 +82,7 @@ public class BlockDatabase {
 
 	public void deleteOwner(Location loc) {
 		try {
-			String world = loc.getWorld().getName();
-			int x = (int) loc.getX(), y = (int) loc.getY(), z = (int) loc.getZ();
-			DELETE_BY_LOCATION.execute(world, x, y, z);
+			DELETE_BY_LOCATION.execute(loc.getWorld().getName(), (int) loc.getX(), (int) loc.getY(), (int) loc.getZ());
 		} catch (SQLException e) {
 			logger.log(Level.SEVERE, "데이터베이스에서 블록의 주인을 제거하는 도중 오류가 발생하였습니다.");
 		}

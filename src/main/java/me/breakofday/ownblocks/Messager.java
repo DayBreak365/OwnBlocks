@@ -1,4 +1,4 @@
-package me.breakofday.OwnBlocks;
+package me.breakofday.ownblocks;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
