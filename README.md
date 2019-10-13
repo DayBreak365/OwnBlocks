@@ -10,3 +10,9 @@ OwnBlocks is licensed under the [MIT License](https://github.com/DayBreak365/Own
 
 New challenges, infinite possibilities. Further development is allowed to any developers.
 If you've created a new code that you want everyone to know, please contribute to the project through the Pull Request.<br>
+
+**🌏 Languages**
+
+OwnBlocks supports the following languages:
+- 한국어
+- English
