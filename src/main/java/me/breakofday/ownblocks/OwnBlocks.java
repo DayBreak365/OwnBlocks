@@ -1,4 +1,4 @@
-package me.breakofday.OwnBlocks;
+package me.breakofday.ownblocks;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,8 +11,8 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import me.breakofday.OwnBlocks.database.BlockDatabase;
-import me.breakofday.OwnBlocks.database.ConnectionWrapper;
+import me.breakofday.ownblocks.database.BlockDatabase;
+import me.breakofday.ownblocks.database.ConnectionWrapper;
 
 public class OwnBlocks extends JavaPlugin implements Listener {
 

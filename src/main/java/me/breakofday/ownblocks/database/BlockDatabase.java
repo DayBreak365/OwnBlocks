@@ -1,4 +1,4 @@
-package me.breakofday.OwnBlocks.database;
+package me.breakofday.ownblocks.database;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 
 import org.bukkit.Location;
 
-import me.breakofday.OwnBlocks.database.ConnectionWrapper.StatementWrapper;
+import me.breakofday.ownblocks.database.ConnectionWrapper.StatementWrapper;
 
 public class BlockDatabase {
 

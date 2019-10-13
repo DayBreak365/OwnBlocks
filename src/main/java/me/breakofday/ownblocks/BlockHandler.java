@@ -1,4 +1,4 @@
-package me.breakofday.OwnBlocks;
+package me.breakofday.ownblocks;
 
 import java.util.Iterator;
 
@@ -14,7 +14,7 @@ import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 
-import me.breakofday.OwnBlocks.database.BlockDatabase;
+import me.breakofday.ownblocks.database.BlockDatabase;
 
 class BlockHandler implements Listener {
 
