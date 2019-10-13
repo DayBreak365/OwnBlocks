@@ -14,6 +14,7 @@ import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 
+import me.breakofday.ownblocks.Language.LanguageNode;
 import me.breakofday.ownblocks.database.BlockDatabase;
 
 class BlockHandler implements Listener {
@@ -21,9 +22,9 @@ class BlockHandler implements Listener {
 	private final BlockDatabase database;
 	private final Language language;
 
-	BlockHandler(BlockDatabase database) {
+	BlockHandler(BlockDatabase database, Language language) {
 		this.database = database;
-		this.language = OwnBlocks.getPlugin().getLanguage();
+		this.language = language;
 	}
 
 	@EventHandler
@@ -40,7 +41,7 @@ class BlockHandler implements Listener {
 				database.deleteOwner(loc);
 			} else {
 				e.setCancelled(true);
-				p.sendMessage(ChatColor.translateAlternateColorCodes('&', language.get("block.unbreakable")));
+				p.sendMessage(ChatColor.translateAlternateColorCodes('&', language.get(LanguageNode.BLOCK_PROHIBITED)));
 			}
 		}
 	}

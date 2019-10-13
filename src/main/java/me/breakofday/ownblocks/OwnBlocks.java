@@ -12,6 +12,7 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import me.breakofday.ownblocks.Language.LanguageNode;
 import me.breakofday.ownblocks.configuration.OwnBlocksConfig;
 import me.breakofday.ownblocks.database.BlockDatabase;
 import me.breakofday.ownblocks.database.ConnectionWrapper;
@@ -37,7 +38,7 @@ public class OwnBlocks extends JavaPlugin implements Listener {
 	private final Messager messager = new Messager();
 	private final BlockDatabase database;
 	private final BlockHandler blockHandler;
-	private final Language language;
+	public final Language language;
 
 	public OwnBlocks() {
 		plugin = this;
@@ -51,19 +52,15 @@ public class OwnBlocks extends JavaPlugin implements Listener {
 			logger.log(Level.SEVERE, "An error has occurred while loading the plugin: " + ex.getClass().getSimpleName());
 		}
 		this.database = database;
-		this.blockHandler = new BlockHandler(database);
 		this.language = language;
-	}
-
-	public Language getLanguage() {
-		return language;
+		this.blockHandler = new BlockHandler(database, language);
 	}
 
 	@Override
 	public void onEnable() {
 		if (database != null) {
 			Bukkit.getPluginManager().registerEvents(blockHandler, this);
-			messager.sendConsoleMessage(language.get("plugin.enabled"));
+			messager.sendConsoleMessage(language.get(LanguageNode.PLUGIN_ENABLED));
 		} else {
 			Bukkit.getPluginManager().disablePlugin(this);
 		}
@@ -73,7 +70,7 @@ public class OwnBlocks extends JavaPlugin implements Listener {
 	public void onDisable() {
 		HandlerList.unregisterAll(blockHandler);
 		ConnectionWrapper.closeAll();
-		messager.sendConsoleMessage(language.get("plugin.disabled"));
+		messager.sendConsoleMessage(language.get(LanguageNode.PLUGIN_DISABLED));
 	}
 
 }
