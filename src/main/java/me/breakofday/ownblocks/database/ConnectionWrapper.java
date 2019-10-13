@@ -26,14 +26,14 @@ public class ConnectionWrapper {
 			try {
 				connection.close();
 			} catch (SQLException e) {
-				logger.log(Level.SEVERE, "Connection을 닫는 도중 오류가 발생하였습니다.");
+				logger.log(Level.SEVERE, "An error has occurred while closing the connection.");
 			}
 		}
 		for (PreparedStatement statement : statements) {
 			try {
 				statement.close();
 			} catch (SQLException e) {
-				logger.log(Level.SEVERE, "Statement를 닫는 도중 오류가 발생하였습니다.");
+				logger.log(Level.SEVERE, "An error has occurred while closing the statement.");
 			}
 		}
 	}

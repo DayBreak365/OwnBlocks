@@ -19,9 +19,11 @@ import me.breakofday.ownblocks.database.BlockDatabase;
 class BlockHandler implements Listener {
 
 	private final BlockDatabase database;
+	private final Language language;
 
-	public BlockHandler(BlockDatabase database) {
+	BlockHandler(BlockDatabase database) {
 		this.database = database;
+		this.language = OwnBlocks.getPlugin().getLanguage();
 	}
 
 	@EventHandler
@@ -38,37 +40,37 @@ class BlockHandler implements Listener {
 				database.deleteOwner(loc);
 			} else {
 				e.setCancelled(true);
-				p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&c저런! &7부술 수 없는 블록입니다."));
+				p.sendMessage(ChatColor.translateAlternateColorCodes('&', language.get("block.unbreakable")));
 			}
 		}
 	}
 
 	@EventHandler
 	private void onBlockExplode(BlockExplodeEvent e) {
-		Iterator<Block> iterator = e.blockList().iterator();
-		while (iterator.hasNext()) {
-			Block b = iterator.next();
-			if (database.hasOwner(b.getLocation())) {
-				iterator.remove();
+		Iterator<Block> blocks = e.blockList().iterator();
+		while (blocks.hasNext()) {
+			Block block = blocks.next();
+			if (database.hasOwner(block.getLocation())) {
+				blocks.remove();
 			}
 		}
 	}
 
 	@EventHandler
 	private void onEntityExplode(EntityExplodeEvent e) {
-		Iterator<Block> iterator = e.blockList().iterator();
-		while (iterator.hasNext()) {
-			Block b = iterator.next();
-			if (database.hasOwner(b.getLocation())) {
-				iterator.remove();
+		Iterator<Block> blocks = e.blockList().iterator();
+		while (blocks.hasNext()) {
+			Block block = blocks.next();
+			if (database.hasOwner(block.getLocation())) {
+				blocks.remove();
 			}
 		}
 	}
 
 	@EventHandler
 	private void onPistonExtend(BlockPistonExtendEvent e) {
-		for (Block b : e.getBlocks()) {
-			if (database.hasOwner(b.getLocation())) {
+		for (Block block : e.getBlocks()) {
+			if (database.hasOwner(block.getLocation())) {
 				e.setCancelled(true);
 				break;
 			}
